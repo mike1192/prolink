@@ -13,7 +13,7 @@
     "build": "vite build && vite build --ssr",
     "build:dev": "vite build --mode development",
     "build:all": "npm run build:frontend && npm run build:superadmin",
-    "build:frontend": "cd present && npm run build",
+    "build:frontend": "cd present && npm install && npm run build"
     "build:superadmin": "cd superadmin && npm run build",
     "start": "node dist/server/index.js",
     "preview": "vite preview",
