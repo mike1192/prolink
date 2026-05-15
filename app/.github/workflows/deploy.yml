@@ -1,0 +1,87 @@
+name: Deploy Prolink
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    
+    - name: Install root dependencies
+      working-directory: ./app
+      run: npm install
+    
+    - name: Install present dependencies
+      working-directory: ./app/present
+      run: npm install
+    
+    - name: Install superadmin dependencies
+      working-directory: ./app/superadmin
+      run: npm install
+    
+    - name: Lint code
+      working-directory: ./app
+      run: npm run lint --if-present
+    
+    - name: Build frontend
+      working-directory: ./app
+      run: npm run build:frontend
+    
+    - name: Build superadmin
+      working-directory: ./app
+      run: npm run build:superadmin
+    
+    - name: Verify builds
+      working-directory: ./app
+      run: |
+        test -f server/public/present/index.html || exit 1
+        test -f server/public/superadmin/index.html || exit 1
+        echo "✅ All builds successful"
+    
+    - name: Test API
+      working-directory: ./app
+      run: npm run test --if-present
+    
+    - name: Upload artifacts
+      if: success()
+      uses: actions/upload-artifact@v3
+      with:
+        name: builds-${{ matrix.node-version }}
+        path: app/server/public/
+        retention-days: 7
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Deploy to production
+      run: |
+        echo "🚀 Deploying to production..."
+        # Add your deployment script here
+        # Example: ssh user@server 'cd /var/www/prolink && ./deploy.sh'
+        
+    - name: Health check
+      run: |
+        # Add your health check here
+        curl -f http://your-domain.com/api/health || exit 1
+        echo "✅ Health check passed"

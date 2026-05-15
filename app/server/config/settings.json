@@ -1,0 +1,55 @@
+{
+  "platform": {
+    "name": "ProLink",
+    "description": "The home for makers shipping the future.",
+    "url": "https://projectlink.io",
+    "logo": "",
+    "favicon": "",
+    "theme": "light",
+    "language": "fr"
+  },
+  "security": {
+    "twoFactorRequired": true,
+    "emailVerification": true,
+    "blockDisposableEmails": false,
+    "adminActivityLogs": true,
+    "sessionTimeout": 24,
+    "maxLoginAttempts": 5,
+    "passwordMinLength": 8,
+    "requireStrongPasswords": true
+  },
+  "api": {
+    "key": "pl_live_4fK29jXkP2mZx8nQwVcL3bRtYhA7sDfG",
+    "rateLimit": 1000,
+    "enableCors": true,
+    "allowedOrigins": [
+      "https://projectlink.io"
+    ],
+    "webhookSecret": "whsec_1234567890abcdef"
+  },
+  "limits": {
+    "maxProjectsPerUser": 50,
+    "maxCommentsPerMinute": 20,
+    "maxUploadSizeMB": 25,
+    "maxTeamMembers": 10,
+    "maxSkillsPerUser": 20
+  },
+  "email": {
+    "provider": "smtp",
+    "smtpHost": "smtp.gmail.com",
+    "smtpPort": 587,
+    "smtpUser": "",
+    "smtpPassword": "",
+    "fromEmail": "noreply@projectlink.io",
+    "fromName": "ProjectLink"
+  },
+  "notifications": {
+    "enableEmailNotifications": true,
+    "enablePushNotifications": true,
+    "enableSlackIntegration": false,
+    "slackWebhook": "",
+    "notifyOnNewUser": true,
+    "notifyOnNewProject": true,
+    "notifyOnError": true
+  }
+}
