@@ -4,18 +4,18 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "dev": "vite dev",
+    "dev": "vite",
     "dev:server": "node server/index.js",
     "dev:all": "concurrently --kill-others-on-fail \"npm run dev:server\" \"npm run dev:frontend\" \"npm run dev:superadmin\"",
     "dev:all:win": "concurrently --kill-others-on-fail \"powershell -c 'npm run dev:server'\" \"powershell -c 'npm run dev:frontend'\" \"powershell -c 'npm run dev:superadmin'\"",
     "dev:frontend": "npm --prefix ./present run dev",
     "dev:superadmin": "npm --prefix ./superadmin run dev",
-    "build": "vite build",
+    "build": "vite build && vite build --ssr",
     "build:dev": "vite build --mode development",
     "build:all": "npm run build:frontend && npm run build:superadmin",
     "build:frontend": "cd present && npm run build",
     "build:superadmin": "cd superadmin && npm run build",
-    "start": "npm run build:all && node server/index.js",
+    "start": "node dist/server/index.js"
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write ."
