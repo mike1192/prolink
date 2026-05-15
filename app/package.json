@@ -15,7 +15,7 @@
     "build:all": "npm run build:frontend && npm run build:superadmin",
     "build:frontend": "cd present && npm install && npm run build",
     "build:superadmin": "cd superadmin && npm install && npm run build",
-    "start": "node dist/server/index.js",
+    "start": "node app/server/index.js",
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write ."
